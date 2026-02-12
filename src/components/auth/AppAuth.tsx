@@ -52,10 +52,10 @@ export function AppAuth({ onSuccess }: AppAuthProps) {
     setLoading(true);
     try {
       const supabase = createClient();
-      const redirectUrl =
-        typeof window !== "undefined"
-          ? `${window.location.origin}/auth/callback`
-          : undefined;
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL ||
+        (typeof window !== "undefined" ? window.location.origin : "");
+      const redirectUrl = baseUrl ? `${baseUrl.replace(/\/$/, "")}/auth/callback` : undefined;
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo: redirectUrl },
@@ -75,7 +75,10 @@ export function AppAuth({ onSuccess }: AppAuthProps) {
     setLoading(true);
     try {
       const supabase = createClient();
-      const redirectUrl = typeof window !== "undefined" ? window.location.origin : undefined;
+      const baseUrl =
+        process.env.NEXT_PUBLIC_APP_URL ||
+        (typeof window !== "undefined" ? window.location.origin : "");
+      const redirectUrl = baseUrl || undefined;
       if (mode === "signup") {
         const { data, error: signUpError } = await supabase.auth.signUp({
           email: email.trim(),
