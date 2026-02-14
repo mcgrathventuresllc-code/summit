@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { createClient, hasPlaceholderConfig, isSupabaseConfigured } from "@/lib/supabase/client";
+import { getAppUrl } from "@/lib/app-url";
 import { MountainBackground } from "@/components/today/MountainBackground";
 
 interface AppAuthProps {
@@ -52,10 +53,8 @@ export function AppAuth({ onSuccess }: AppAuthProps) {
     setLoading(true);
     try {
       const supabase = createClient();
-      const baseUrl =
-        process.env.NEXT_PUBLIC_APP_URL ||
-        (typeof window !== "undefined" ? window.location.origin : "");
-      const redirectUrl = baseUrl ? `${baseUrl.replace(/\/$/, "")}/auth/callback` : undefined;
+      const baseUrl = getAppUrl();
+      const redirectUrl = `${baseUrl.replace(/\/$/, "")}/auth/callback`;
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: { redirectTo: redirectUrl },
@@ -75,10 +74,7 @@ export function AppAuth({ onSuccess }: AppAuthProps) {
     setLoading(true);
     try {
       const supabase = createClient();
-      const baseUrl =
-        process.env.NEXT_PUBLIC_APP_URL ||
-        (typeof window !== "undefined" ? window.location.origin : "");
-      const redirectUrl = baseUrl || undefined;
+      const redirectUrl = getAppUrl();
       if (mode === "signup") {
         const { data, error: signUpError } = await supabase.auth.signUp({
           email: email.trim(),
@@ -181,14 +177,14 @@ export function AppAuth({ onSuccess }: AppAuthProps) {
           <div className="absolute inset-0 rounded-3xl bg-emerald-500/5 pointer-events-none" />
 
           <motion.div variants={item} className="text-center mb-8">
-            <motion.p
+            <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-              className="text-5xl mb-3"
+              className="flex justify-center mb-4"
             >
-              ⛰️
-            </motion.p>
+              <img src="/logo.png" alt="Summit" className="w-20 h-20 object-contain" />
+            </motion.div>
             <motion.h1
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}

@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "Summit - Gamified Healthy Living",
   description: "Fitness, budget, reading & recovery. One app to climb higher.",
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fff" },
     { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },

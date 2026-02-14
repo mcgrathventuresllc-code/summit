@@ -24,7 +24,7 @@ export function CrewJoin({ displayName, onJoined, onBack }: CrewJoinProps) {
     try {
       const result = await joinCrew(code.trim(), displayName);
       if ("crew" in result) onJoined(result.crew);
-      else setError(result.error);
+      else setError(result.error || "Could not join crew");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

@@ -21,6 +21,14 @@ export default function CrewPage() {
   const [crews, setCrews] = useState<Crew[]>([]);
   const [selectedCrew, setSelectedCrew] = useState<Crew | null>(null);
   const [memberIdMap, setMemberIdMap] = useState<Record<string, string>>({});
+  const [codeCopied, setCodeCopied] = useState(false);
+
+  const handleCopyCode = () => {
+    if (!selectedCrew) return;
+    navigator.clipboard?.writeText(selectedCrew.invite_code);
+    setCodeCopied(true);
+    setTimeout(() => setCodeCopied(false), 2000);
+  };
 
   const displayName = userProfile?.name ?? user?.email?.split("@")[0] ?? "Climber";
 
@@ -205,10 +213,10 @@ export default function CrewPage() {
                 </p>
                 <button
                   type="button"
-                  onClick={() => navigator.clipboard?.writeText(selectedCrew.invite_code)}
+                  onClick={handleCopyCode}
                   className="text-xs text-emerald-500 hover:text-emerald-400"
                 >
-                  Copy
+                  {codeCopied ? "Link copied" : "Copy"}
                 </button>
               </div>
               <CrewChat

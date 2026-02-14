@@ -56,15 +56,15 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
       animate={{ opacity: 1, y: 0 }}
       className="rounded-2xl overflow-hidden bg-zinc-900/90 border border-zinc-700/50"
     >
-      <div className="p-4">
-        <div className="flex items-end justify-between gap-3 mb-3">
+      <div className="p-4 sm:p-5">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-3">
           <div>
-            <p className="text-lg font-bold text-zinc-100">{levelName}</p>
-            <p className="text-sm text-zinc-500">
+            <p className="text-xl sm:text-lg font-bold text-zinc-100">{levelName}</p>
+            <p className="text-base sm:text-sm text-zinc-500">
               Level {level} • {current} / {required} XP
             </p>
           </div>
-          <div className="flex gap-2 flex-wrap justify-end text-xs text-zinc-500">
+          <div className="flex gap-3 sm:gap-2 flex-wrap text-sm sm:text-xs text-zinc-500">
             <span className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-sky-400/90 shadow-[0_0_8px_rgba(56,189,248,0.5)]" />
               Completed
@@ -81,8 +81,7 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
         </div>
 
         <div
-          className="relative w-full rounded-xl overflow-hidden"
-          style={{ aspectRatio: "16 / 8" }}
+          className="relative w-full rounded-xl overflow-hidden aspect-[4/3] sm:aspect-[16/9] md:aspect-[16/8] min-h-[220px] sm:min-h-0"
         >
           <svg
             viewBox="0 0 1000 500"
@@ -135,7 +134,7 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
               d={TRAIL_PATH}
               fill="none"
               stroke="rgba(255,255,255,0.2)"
-              strokeWidth="6"
+              strokeWidth="8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -145,7 +144,7 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
               d={TRAIL_PATH}
               fill="none"
               stroke="rgba(56,189,248,0.9)"
-              strokeWidth="6"
+              strokeWidth="8"
               strokeLinecap="round"
               strokeLinejoin="round"
               filter="url(#softGlow)"
@@ -170,7 +169,7 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
                   <circle
                     cx={p.x}
                     cy={p.y}
-                    r={status === "current" ? 11 : 9}
+                    r={status === "current" ? 13 : 11}
                     stroke="rgba(255,255,255,0.5)"
                     strokeWidth="2.5"
                     fill={
@@ -185,7 +184,7 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
                   <text
                     x={p.x + 14}
                     y={p.y - (i % 2 === 0 ? 10 : -18)}
-                    fontSize={status === "current" ? 14 : 12}
+                    fontSize={status === "current" ? 20 : 17}
                     fontWeight={700}
                     fill="rgba(255,255,255,0.92)"
                     style={{
@@ -220,7 +219,7 @@ export function MountainLevelProgress({ totalXp }: MountainLevelProgressProps) {
           </svg>
         </div>
 
-        <p className="text-xs text-zinc-500 mt-2">{totalXp} XP total</p>
+        <p className="text-sm sm:text-xs text-zinc-500 mt-2">{totalXp} XP total</p>
       </div>
     </motion.div>
   );

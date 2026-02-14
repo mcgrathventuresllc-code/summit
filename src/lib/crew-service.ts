@@ -54,14 +54,19 @@ export async function joinCrew(inviteCode: string, displayName: string): Promise
   const { data: crew, error: crewError } = await supabase
     .from("crews")
     .select()
-    .eq("invite_code", code)
-    .single();
+    .ilike("invite_code", code)
+    .maybeSingle();
 
-  if (crewError || !crew) return { error: "Invalid invite code" };
+  if (crewError) return { error: crewError.message };
+  if (!crew) return { error: "Invalid invite code" };
 
   const { error: joinError } = await supabase
     .from("crew_members")
-    .insert({ crew_id: crew.id, user_id: user.id, display_name: displayName || user.email?.split("@")[0] || "Climber" });
+    .insert({
+      crew_id: crew.id,
+      user_id: user.id,
+      display_name: displayName || user.email?.split("@")[0] || "Climber",
+    });
 
   if (joinError) {
     if (joinError.code === "23505") return { error: "You're already in this crew" };
